@@ -106,10 +106,7 @@ class MyScheduleActivity : AppCompatActivity() ,View.OnClickListener{
             onBackPressed()
         }
 
-        if(!Places.isInitialized()){
-            Places.initialize(this@MyScheduleActivity,
-                resources.getString(R.string.google_map_api_key))
-        }
+
 
         if (intent.hasExtra(MainActivity.EXTRA_PLACES_DETAILS)){
             mHappyPlaceDetails=intent.getSerializableExtra(
