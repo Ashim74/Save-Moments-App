@@ -1,21 +1,27 @@
-package com.example.myschedule.activities
+package com.droidnova.myschedule.activities
+
+
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myschedule.adapters.MyScheduleAdapter
-import com.example.myschedule.database.DatabaseHandler
+import com.droidnova.myschedule.activities.databinding.ActivityMainBinding
+import com.droidnova.myschedule.adapters.MyScheduleAdapter
+import com.droidnova.myschedule.database.DatabaseHandler
+import com.droidnova.myschedule.models.HappyPlaceModel
+import com.droidnova.myschedule.utils.swipeToDeleteCallback
+import com.droidnova.myschedule.utils.swipeToEditCallback
 
-import com.example.myschedule.databinding.ActivityMainBinding
-import com.example.myschedule.models.HappyPlaceModel
-import com.example.myschedule.utils.swipeToDeleteCallback
-import com.example.myschedule.utils.swipeToEditCallback
+
 
 class MainActivity : AppCompatActivity() {
     private var binding : ActivityMainBinding? = null
@@ -26,13 +32,47 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
+
+        setSupportActionBar(binding?.toolbarHappyPlace)
+        supportActionBar?.title = "My Plans"
+
+
         binding?.fabAddHappyPlace?.setOnClickListener{
             val intent = Intent(this@MainActivity, MyScheduleActivity::class.java)
-            startActivityForResult(intent,ADD_PLACE_ACTIVITY_REQUEST_CODE)
+            startActivityForResult(intent, ADD_PLACE_ACTIVITY_REQUEST_CODE)
         }
         getHappyPlacesListFromLocalDB()
 
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.share_menu,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId){
+            R.id.menu_share ->{
+                val string = "Download this app to manage your daily life plans and" +
+                " important things that you often forget. you can just slide to delete or edit ." +
+                        " \n\n https://play.google.com/store/apps/details?id=com.droidnova.myschedule"
+
+                shareApp(string)
+            }
+
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun shareApp(string : String){
+        val shareIntent = Intent()
+        shareIntent.action = Intent.ACTION_SEND
+        shareIntent.putExtra(Intent.EXTRA_TEXT,string)
+        shareIntent.type="text/plain"
+        startActivity(Intent.createChooser(shareIntent,"Share"))
+
+    }
+
 
     private fun setUpHappyPlacesRecyclerView(happyPlaceList: ArrayList<HappyPlaceModel>){
         binding?.rvHappyPlacesList?.layoutManager = LinearLayoutManager(this)
@@ -42,7 +82,7 @@ class MainActivity : AppCompatActivity() {
         binding?.rvHappyPlacesList?.setHasFixedSize(true)
 
         placesAdapter.setOnClickListener(object : MyScheduleAdapter.OnClickListener{
-            override fun onClick(position : Int,model:HappyPlaceModel){
+            override fun onClick(position : Int,model: HappyPlaceModel){
                 val intent = Intent(this@MainActivity,
                     MyScheduleDetailActivity::class.java)
                 intent.putExtra(EXTRA_PLACES_DETAILS,model)
@@ -52,9 +92,11 @@ class MainActivity : AppCompatActivity() {
 
         val editSwipeHandler = object : swipeToEditCallback(this){
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
                 val adapter = binding?.rvHappyPlacesList?.adapter as MyScheduleAdapter
                 adapter.notifyEditItem(this@MainActivity,viewHolder.adapterPosition,
-                    ADD_PLACE_ACTIVITY_REQUEST_CODE)
+                    ADD_PLACE_ACTIVITY_REQUEST_CODE
+                )
             }
         }
         val editItemTouchHelper = ItemTouchHelper(editSwipeHandler)
@@ -85,8 +127,14 @@ class MainActivity : AppCompatActivity() {
             binding?.tvNoRecordsAvailable?.visibility = View.GONE
             setUpHappyPlacesRecyclerView(getHappyPlaceList)
         }else {
+            binding?.tvSwipeHint?.visibility=View.GONE
             binding?.rvHappyPlacesList?.visibility = View.GONE
             binding?.tvNoRecordsAvailable?.visibility = View.VISIBLE
+        }
+        if(getHappyPlaceList.size in 1..3){
+            binding?.tvSwipeHint?.visibility=View.VISIBLE
+        }else{
+            binding?.tvSwipeHint?.visibility=View.GONE
         }
 
 

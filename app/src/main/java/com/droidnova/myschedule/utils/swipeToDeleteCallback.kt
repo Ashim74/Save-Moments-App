@@ -1,4 +1,4 @@
-package com.example.myschedule.utils
+package com.droidnova.myschedule.utils
 
 import android.content.Context
 import android.graphics.*
@@ -6,7 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myschedule.R
+import com.droidnova.myschedule.activities.R
 
 abstract class swipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 

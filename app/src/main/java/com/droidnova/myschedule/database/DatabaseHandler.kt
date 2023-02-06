@@ -1,4 +1,4 @@
-package com.example.myschedule.database
+package com.droidnova.myschedule.database
 
 
 import android.content.ContentValues
@@ -7,10 +7,13 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
-import com.example.myschedule.models.HappyPlaceModel
+import com.droidnova.myschedule.models.HappyPlaceModel
 
 
- class DatabaseHandler(context: Context):SQLiteOpenHelper(context,DATABASE_NAME,null,DATABASE_VERSION) {
+ class DatabaseHandler(context: Context):SQLiteOpenHelper(context,
+     DATABASE_NAME,null,
+     DATABASE_VERSION
+ ) {
 
     companion object{
         private const val DATABASE_VERSION = 1
@@ -48,7 +51,7 @@ import com.example.myschedule.models.HappyPlaceModel
         onCreate(db)
     }
 
-    fun addHappyPlace(happyPlace:HappyPlaceModel):Long {
+    fun addHappyPlace(happyPlace: HappyPlaceModel):Long {
         val db = this.writableDatabase
 
         val contentValues = ContentValues()
@@ -65,7 +68,7 @@ import com.example.myschedule.models.HappyPlaceModel
         return result
 
     }
-     fun updateHappyPlace(happyPlace:HappyPlaceModel):Int {
+     fun updateHappyPlace(happyPlace: HappyPlaceModel):Int {
          val db = this.writableDatabase
 
          val contentValues = ContentValues()
@@ -76,9 +79,10 @@ import com.example.myschedule.models.HappyPlaceModel
 
 
 
-        val success = db.update(TABLE_HAPPY_PLACE,
+        val success = db.update(
+            TABLE_HAPPY_PLACE,
             contentValues,
-            KEY_ID+ "="+happyPlace.id,null)
+            KEY_ID + "="+happyPlace.id,null)
 
          db.close()
          return success

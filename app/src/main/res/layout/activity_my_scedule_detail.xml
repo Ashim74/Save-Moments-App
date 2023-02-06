@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MyScheduleDetailActivity">
+    tools:context=".MyScheduleDetailActivity">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_happy_place_detail"
         android:layout_width="match_parent"
@@ -14,6 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:theme="@style/CustomToolbarStyle"/>
+
     <ScrollView
         android:id="@+id/sv_main"
         android:layout_width="match_parent"
@@ -26,37 +27,115 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_place_image"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/detail_screen_image_height_size"
-                android:scaleType="centerCrop"
-                android:contentDescription="No image"
-                android:src="@drawable/detail_screen_image_placeholder"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_description"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_pic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/detail_screen_description_margin"
-                android:layout_marginTop="@dimen/detail_screen_description_margin"
-                android:layout_marginEnd="@dimen/detail_screen_description_margin"
-                android:textColor="@color/detail_screen_description_text_color"
-                android:textSize="@dimen/detail_screen_description_text_size"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.533"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_place_image"
-                tools:text="Description" />
+                app:layout_constraintEnd_toEndOf="parent"
+               >
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_place_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/detail_screen_image_height_size"
+                    android:scaleType="centerCrop"
+                    android:layout_margin="15dp"
+                    android:contentDescription="No image"
+                    android:src="@drawable/detail_screen_image_placeholder"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/cv_pic"
+                app:layout_constraintStart_toStartOf="parent"
+
+                >
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/detail_screen_description_margin"
+                    android:layout_marginEnd="@dimen/detail_screen_description_margin"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="italic"
+                    tools:text="Date"
+                    />
+
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/cv_date"
+                app:layout_constraintStart_toStartOf="parent"
+
+                >
+                <TextView
+                    android:id="@+id/tv_day"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/detail_screen_description_margin"
+                    android:layout_marginEnd="@dimen/detail_screen_description_margin"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="italic"
+                    tools:text="Day"
+                    />
+
+            </androidx.cardview.widget.CardView>
+
+                <ImageView
+                    android:id="@+id/iv_text_to_speaker"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="@dimen/detail_screen_description_margin"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="@dimen/detail_screen_description_margin"
+                    app:layout_constraintStart_toEndOf="@+id/cv_date"
+                    app:layout_constraintTop_toBottomOf="@id/cv_pic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:src="@drawable/ic_speaker_35dp"
+                    android:layout_margin="08dp"
+                    tools:text="Date"
+                    />
 
 
 
+           <androidx.cardview.widget.CardView
+               android:id="@+id/cv_text"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               app:layout_constraintTop_toBottomOf="@id/cv_day"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+              >
+
+               <TextView
+                   android:id="@+id/tv_description"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="@dimen/detail_screen_description_margin"
+                   android:layout_marginTop="7dp"
+                   android:layout_marginEnd="@dimen/detail_screen_description_margin"
+                   android:textColor="@color/detail_screen_description_text_color"
+                   android:textSize="@dimen/detail_screen_description_text_size"
+                   android:textStyle="bold"
+                   android:layout_margin="15dp"
+                   tools:text="Description" />
+
+           </androidx.cardview.widget.CardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

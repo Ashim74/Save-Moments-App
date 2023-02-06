@@ -1,4 +1,4 @@
-package com.example.myschedule.adapters
+package com.droidnova.myschedule.adapters
 
 import android.app.Activity
 import android.content.Context
@@ -7,12 +7,12 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myschedule.R
-import com.example.myschedule.activities.MyScheduleActivity
-import com.example.myschedule.activities.MainActivity
-import com.example.myschedule.database.DatabaseHandler
-import com.example.myschedule.databinding.ItemsMyScheduleBinding
-import com.example.myschedule.models.HappyPlaceModel
+import com.droidnova.myschedule.activities.MyScheduleActivity
+import com.droidnova.myschedule.activities.MainActivity
+import com.droidnova.myschedule.activities.R
+import com.droidnova.myschedule.activities.databinding.ItemsMyScheduleBinding
+import com.droidnova.myschedule.database.DatabaseHandler
+import com.droidnova.myschedule.models.HappyPlaceModel
 
 open class MyScheduleAdapter (
     private val context: Context,
@@ -38,11 +38,17 @@ open class MyScheduleAdapter (
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-           val model = list[position]
+        val model = list[position]
 
-            val internalImage=MyScheduleActivity()
+        val internalImage= MyScheduleActivity()
+        val imageURI :Uri = Uri.parse(model.image)
+        if (imageURI.toString()!="null"){
+            holder.placeImage.setImageURI(imageURI)
+        } else {
+            holder.placeImage.setImageResource(R.drawable.add_screen_image_placeholder)
+        }
 
-            holder.placeImage.setImageURI(Uri.parse(model.image))
+
             holder.tvTitle.text = model.title
             holder.tvDescription.text = model.description
 
@@ -56,7 +62,7 @@ open class MyScheduleAdapter (
     }
 
      fun notifyEditItem(activity : Activity,position: Int,requestCode: Int){
-         val intent = Intent(context,MyScheduleActivity::class.java)
+         val intent = Intent(context, MyScheduleActivity::class.java)
          intent.putExtra(MainActivity.EXTRA_PLACES_DETAILS,list[position])
          activity.startActivityForResult(intent,requestCode)
          notifyItemChanged(position)

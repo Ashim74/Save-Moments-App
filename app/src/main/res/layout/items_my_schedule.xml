@@ -33,12 +33,13 @@
                 android:src="@mipmap/ic_launcher_round"
                 app:civ_border_color="@color/circular_image_border_color"
                 />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/item_happy_place_ll_marginStart"
                 android:layout_marginEnd="@dimen/item_happy_place_ll_marginEnd"
-                android:orientation="vertical">
+                android:orientation="vertical" >
 
                 <TextView
                     android:id="@+id/tvTitle"
@@ -55,14 +56,12 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/item_happy_place_description_text_color"
                     android:textSize="@dimen/item_happy_place_description_textSize"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     tools:text="Description" />
+
             </LinearLayout>
-
-
-
-
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

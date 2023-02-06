@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MyScheduleActivity">
+    tools:context=".MyScheduleActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_add_place"
@@ -71,7 +71,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/edit_text_hint_description"
-
                     android:inputType="textMultiLine"
                     android:textColor="@color/primary_text_color"
                     android:textColorHint="@color/secondary_text_color"

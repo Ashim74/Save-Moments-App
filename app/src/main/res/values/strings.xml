@@ -1,14 +1,16 @@
 <resources>
-    <string name="app_name">My Schedule</string>
+    <string name="app_name">My Plans</string>
     <string name="edit_text_hint_title">Title</string>
     <string name="edit_text_hint_description">Description</string>
     <string name="edit_text_hint_date">Date</string>
     <string name="edit_text_hint_location">Location</string>
     <string name="btn_text_save">Save</string>
     <string name="text_add_image">Add Image</string>
-    <string name="note_text_no_happy_places_found_yet">No Schedule found, Please add one</string>
+    <string name="note_text_no_happy_places_found_yet">No Plans found, Please add one</string>
 
     <string name="image_content_description">image</string>
     <string name="btn_text_view_on_map">Map</string>
     <string name="add_place_select_current_location_text">SELECT CURRENT LOCATION</string>
+    <string name="swipe_left_or_right_to_delete_or_edit">Swipe Left or Right to Delete or Edit</string>
+    <string name="share">Share</string>
 </resources>

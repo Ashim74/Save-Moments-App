@@ -1,4 +1,4 @@
-package com.example.myschedule.activities
+package com.droidnova.myschedule.activities
 
 import android.Manifest
 import android.app.Activity
@@ -17,15 +17,11 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import com.example.myschedule.R
-import com.example.myschedule.database.DatabaseHandler
-import com.example.myschedule.databinding.ActivityMyScheduleBinding
-
-import com.example.myschedule.models.HappyPlaceModel
-import com.google.android.libraries.places.api.Places
+import com.droidnova.myschedule.activities.databinding.ActivityMyScheduleBinding
+import com.droidnova.myschedule.database.DatabaseHandler
+import com.droidnova.myschedule.models.HappyPlaceModel
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -78,20 +74,21 @@ class MyScheduleActivity : AppCompatActivity() ,View.OnClickListener{
             if (result.resultCode == RESULT_OK){
                 if (result.data != null){
                     try {
+
                         val data = result.data
                         val thumbNail2 =data!!.extras!!.get("data") as Bitmap
                          saveImageToInternalStorage = saveImageToInternalStorage(thumbNail2)
                         Log.e("Saved image: ","path :: $saveImageToInternalStorage")
                         Toast.makeText(this@MyScheduleActivity,"$saveImageToInternalStorage",Toast.LENGTH_SHORT)
                         binding?.ivPlaceImage?.setImageBitmap(thumbNail2)
-                    }catch (e : IOException){
+
+                    }
+                    catch (e : IOException){
                         e.printStackTrace()
                         Toast.makeText(this@MyScheduleActivity,"something wrong",Toast.LENGTH_SHORT).show()
                     }
-
                 }
             }
-
         }
 
 
@@ -110,7 +107,8 @@ class MyScheduleActivity : AppCompatActivity() ,View.OnClickListener{
 
         if (intent.hasExtra(MainActivity.EXTRA_PLACES_DETAILS)){
             mHappyPlaceDetails=intent.getSerializableExtra(
-                MainActivity.EXTRA_PLACES_DETAILS) as HappyPlaceModel
+                MainActivity.EXTRA_PLACES_DETAILS
+            ) as HappyPlaceModel
 
         }
 
@@ -118,19 +116,20 @@ class MyScheduleActivity : AppCompatActivity() ,View.OnClickListener{
             DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                 cal.set(Calendar.YEAR, year)
                 cal.set(Calendar.MONTH, monthOfYear)
-                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+                         cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                 updateDateInView()
             }
 
         updateDateInView()
 
         if(mHappyPlaceDetails!=null){
-            supportActionBar?.title = "Edit Happy Place"
+
+            supportActionBar?.title = "Edit Plan"
 
             binding?.etTitle?.setText(mHappyPlaceDetails!!.title)
             binding?.etDescription?.setText(mHappyPlaceDetails!!.description)
             binding?.etDate?.setText(mHappyPlaceDetails!!.date)
-
 
             saveImageToInternalStorage = Uri.parse(
                 mHappyPlaceDetails!!.image)
@@ -188,14 +187,14 @@ class MyScheduleActivity : AppCompatActivity() ,View.OnClickListener{
                             val addHappyPlace = dbHolder.addHappyPlace(happyPlaceModel)
                             if(addHappyPlace>0){
                                 setResult(Activity.RESULT_OK)
-                                Toast.makeText(this, " image saved " , Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, " Task saved " , Toast.LENGTH_SHORT).show()
                                 finish()
                             }
                         }else{
                             val updateHappyPlace = dbHolder.updateHappyPlace(happyPlaceModel)
                             if(updateHappyPlace>0){
                                 setResult(Activity.RESULT_OK)
-                                Toast.makeText(this, " image saved " , Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, " Task saved " , Toast.LENGTH_SHORT).show()
                                 finish()
                             }
                         }
@@ -224,7 +223,7 @@ class MyScheduleActivity : AppCompatActivity() ,View.OnClickListener{
             Manifest.permission.WRITE_EXTERNAL_STORAGE)
              .withListener(object : PermissionListener {
                  override fun onPermissionGranted(response : PermissionGrantedResponse?)
-                 {Toast.makeText(this@MyScheduleActivity,"permission granted for pictures",Toast.LENGTH_SHORT).show()
+                 {
                     val galleryIntent = Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                      imagePicker.launch(galleryIntent)
                  }
@@ -280,12 +279,12 @@ class MyScheduleActivity : AppCompatActivity() ,View.OnClickListener{
 
     private fun saveImageToInternalStorage(bitmap: Bitmap):Uri{
         val file = File(externalCacheDir?.absoluteFile.toString() +
-                File.separator + "KidsDrawingApp" + System.currentTimeMillis()/1000 + ".jpg"
+                File.separator + "DailyPlans" + System.currentTimeMillis()/1000 + ".jpg"
         )
         if(bitmap != null){
             try{
                 val bytes = ByteArrayOutputStream()
-                bitmap.compress(Bitmap.CompressFormat.PNG,90,bytes)
+                bitmap.compress(Bitmap.CompressFormat.JPEG,100,bytes)
 
                 val fo = FileOutputStream(file)
                 fo.write(bytes.toByteArray())

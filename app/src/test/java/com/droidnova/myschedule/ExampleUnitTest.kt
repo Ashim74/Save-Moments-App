@@ -1,4 +1,4 @@
-package com.example.myschedule
+package com.droidnova.myschedule
 
 import org.junit.Test
 
